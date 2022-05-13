@@ -28,14 +28,37 @@ inquirer
             message: "Welcome to the Employee Database. Please select an option: ",
             choices:
             [
-                "View All Departments",
-                "View All Roles",
-                "View All Employees",
-                "Add A Department",
-                "Add A Role",
-                "Add An Employee",
-                "Update An Employee's Role",
-                "EXIT",
+                {
+                name: "View All Departments",
+                value: "viewAllDepartments"
+                },
+                {
+                name: "View All Roles",
+                value: "viewAllRoles"
+                },
+                {
+                name: "View All Employees",
+                value: "viewAllEmployees"
+                },
+                {
+                name: "Add A Department",
+                value: "addDepartment"
+                },
+                {
+                name: "Add A Role",
+                value: "addRole"
+                },
+                {
+                name: "Add An Employee",
+                value: "addEmployee"
+                },
+                {
+                name: "Update An Employee's Role",
+                value: "updateRole"
+                },
+                {
+                name: "EXIT",
+                }
             ]
         }
     ])
