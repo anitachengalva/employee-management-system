@@ -68,7 +68,3 @@ inquirer
             return
         }
     });
-
-// other functions for get employees, get departments, get roles, add department, add role, add employee, update employee role
-
-// join statements for sql
