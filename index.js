@@ -4,10 +4,10 @@ const mySQL = require("mysql2");
 const table = require("console.table");
 
 // create a link to database
-const connection = mySQL.createConnection(
+const db = mySQL.createConnection(
     {
         host: "localhost",
-        port: "3300",
+        port: "3001",
         user: "root",
         password: "mysql",
         database: "employee_db",
@@ -15,9 +15,9 @@ const connection = mySQL.createConnection(
 );
 
 // check connection
-connection.connect(function(err) {
+db.connect(function(err) {
     if (err) throw err;
-    console.log("Connected at " + connection.threadId);
+    console.log("Connected at " + db.threadId);
     welcome();
 });
 
@@ -97,7 +97,7 @@ inquirer
             updateRole();
         }
         else if(startOptions === "EXIT") {
-            connection.end();
+            db.end();
             return
         }
     });
@@ -107,7 +107,7 @@ inquirer
     // view all departments
     function viewAllDepartments() {
         console.log("Viewing all Departments");
-        connection.query("SELECT * FROM departments", function (err, res) {
+        db.query("SELECT * FROM departments", function (err, res) {
             if (err) throw err;
             console.table(res);
             nowDone();
@@ -117,7 +117,7 @@ inquirer
     // view all roles
     function viewAllRoles() {
         console.log("Viewing all Roles");
-        connection.query("SELECT * FROM role", function (err, res) {
+        db.query("SELECT * FROM role", function (err, res) {
             if (err) throw err;
             console.table(res);
             nowDone();
@@ -127,7 +127,7 @@ inquirer
     // view all employees
     function viewAllEmployees() {
         console.log("Viewing all Employees");
-        connection.query("SELECT * FROM employee", function (err, res) {
+        db.query("SELECT * FROM employee", function (err, res) {
             if (err) throw err;
             console.table(res);
             nowDone();
@@ -138,7 +138,7 @@ inquirer
     // add department
     function addDepartment() {
         console.log("Add A Department");
-        connection.query("INSERT INTO departments SET ?", function (err, res) {
+        db.query("INSERT INTO departments SET ?", function (err, res) {
             if (err) throw err;
             // need help on this part
         })
@@ -191,7 +191,7 @@ function nowDone() {
         }
         else {
             console.log("Goodbye");
-            connection.end();
+            db.end();
             return
         }
     });
