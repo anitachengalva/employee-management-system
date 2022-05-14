@@ -5,7 +5,7 @@ const table = require("console.table");
 
 const Connection = require("mysql2/typings/mysql/lib/Connection");
 
-// create a link between database and .js
+// create a link to database
 const db = mySQL.createConnection(
     {
         host: "localhost",
@@ -67,7 +67,7 @@ inquirer
     ])
 
     // how the code responds to each possible user input choice
-    .then(function(answer) {
+    .then(({ startOptions }) => {
         if(startOptions === "viewAllDepartments") {
             viewAllDepartments();
         }
