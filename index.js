@@ -19,13 +19,20 @@ const db = mySQL.createConnection(
     }
 );
 
+// welcome message
+function init() {
+    console.log("Welcome to the Employee Database")
+    userChoices();
+}
+
 // inquirer prompt
+function userChoices(){
 inquirer
     .prompt([
         {
             type: "list",
-            name: "start-options",
-            message: "Welcome to the Employee Database. Please select an option: ",
+            name: "startOptions",
+            message: "Please select an option: ",
             choices:
             [
                 {
@@ -65,29 +72,47 @@ inquirer
 
     // how the code responds to each possible user input choice
     .then(function(answer) {
-        if(answer.choice === "View All Departments") {
-            view.viewAllDepartments();
+        if(startOptions === "viewAllDepartments") {
+            viewAllDepartments();
         }
-        else if(answer.choice === "View All Roles") {
-            view.viewAllRoles();
+        else if(startOptions === "viewAllRoles") {
+            viewAllRoles();
         }
-        else if(answer.choice === "View All Employees") {
-            view.viewAllEmployees();
+        else if(startOptions === "viewAllEmployees") {
+            viewAllEmployees();
         }
-        else if(answer.choice === "Add A Department") {
+        else if(startOptions === "addDepartment") {
             add.addDepartment();
         }
-        else if(answer.choice === "Add A Role") {
-            add.addRole();
+        else if(startOptions === "addRole") {
+            addRole();
         }
-        else if(answer.choice === "Add An Employee") {
-            add.addEmployee();
+        else if(startOptions === "addEmployee") {
+            addEmployee();
         }
-        else if(answer.choice === "Update An Employee's Role") {
-            update.updateRole();
+        else if(startOptions === "updateRole") {
+            updateRole();
         }
-        else if(answer.choice === "EXIT") {
+        else if(startOptions === "EXIT") {
             Connection.end();
             return
         }
     });
+}
+
+// VIEW functions
+    // view all departments
+
+    // view all roles
+
+    // view all employees
+
+// ADD functions
+    // add department
+
+    // add role
+
+    // add employee
+
+// UPDATE functions
+    // update role
