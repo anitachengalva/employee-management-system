@@ -126,7 +126,7 @@ inquirer
 
     // view all employees
     function viewAllEmployees() {
-        console.log("Viewing all Employees")
+        console.log("Viewing all Employees");
         connection.query("SELECT * FROM employee", function (err, res) {
             if (err) throw err;
             console.table(res);
@@ -137,7 +137,11 @@ inquirer
 // ADD functions
     // add department
     function addDepartment() {
-
+        console.log("Add A Department");
+        connection.query("INSERT INTO departments SET ?", function (err, res) {
+            if (err) throw err;
+            // need help on this part
+        })
     }
 
     // add role
