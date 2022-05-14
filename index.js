@@ -117,11 +117,21 @@ inquirer
     // view all roles
     function viewAllRoles() {
         console.log("Viewing all Roles");
+        connection.query("SELECT * FROM role", function (err, res) {
+            if (err) throw err;
+            console.table(res);
+            nowDone();
+        })
     }
 
     // view all employees
     function viewAllEmployees() {
         console.log("Viewing all Employees")
+        connection.query("SELECT * FROM employee", function (err, res) {
+            if (err) throw err;
+            console.table(res);
+            nowDone();
+        })
     }
 
 // ADD functions
