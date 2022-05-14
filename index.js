@@ -97,7 +97,7 @@ inquirer
             updateRole();
         }
         else if(startOptions === "EXIT") {
-            Connection.end();
+            connection.end();
             return
         }
     });
@@ -155,3 +155,40 @@ inquirer
     function updateRole() {
 
     }
+
+
+// function asked at the end of sections
+// allows user to end or keep working
+function nowDone() {
+    inquirer
+    .prompt([
+        {
+            type: "list",
+            name: "done",
+            message: "Would you like to exit, or keep working?",
+            choices: [
+                {
+                    name: "Keep Working",
+                    value: true
+                },
+                {
+                    name: "EXIT",
+                    value: false
+                }
+            ]
+        }
+    ])
+
+    // returns promise for user input
+    .then(({ nowDone }) => {
+        if(nowDone === "true") {
+            // go back to initial inquirer prompt with start questions
+            userChoices();
+        }
+        else {
+            console.log("Goodbye");
+            connection.end();
+            return
+        }
+    });
+}
