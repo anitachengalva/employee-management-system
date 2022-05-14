@@ -7,7 +7,7 @@ const table = require("console.table");
 const db = mySQL.createConnection(
     {
         host: "localhost",
-        port: "3001",
+        port: "3306",
         user: "root",
         password: "mysql",
         database: "employee_db",
@@ -97,6 +97,7 @@ inquirer
             updateRole();
         }
         else if(startOptions === "EXIT") {
+            console.log("Goodbye");
             db.end();
             return
         }
@@ -152,6 +153,12 @@ inquirer
     // add employee
     function addEmployee() {
 
+        //get list of roles
+        //get list of employees
+        //inquirer prompt for first name and last name, then pick a role
+        //pick employee from list
+        //pick role from list
+
     }
 
 // UPDATE functions
@@ -184,12 +191,12 @@ function nowDone() {
     ])
 
     // returns promise for user input
-    .then(({ nowDone }) => {
-        if(nowDone === "true") {
+    .then(({ done }) => {
+        if(done === true) {
             // go back to initial inquirer prompt with start questions
             userChoices();
         }
-        else {
+        else if(done === false) {
             console.log("Goodbye");
             db.end();
             return
