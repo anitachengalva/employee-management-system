@@ -215,14 +215,15 @@ function nowDone() {
 
     // returns promise for user input
     .then(({ done }) => {
-        if(done === true) {
-            // go back to initial inquirer prompt with start questions
-            userChoices();
-        }
-        else if(done === false) {
-            console.log("Goodbye");
-            db.end();
-            return
+        
+        switch(done){
+            case true:
+                // go back to initial inquirer prompt with start questions
+                userChoices();
+            break;
+            case false:
+                nowExit();
+            break;
         }
     });
 }
