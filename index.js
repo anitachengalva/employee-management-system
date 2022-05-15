@@ -23,7 +23,7 @@ db.connect(function(err) {
 
 // welcome message
 function welcome() {
-    console.log("Welcome to the Employee Management Database");
+    console.log("\n" + "Welcome to the Employee Management Database" + "\n");
     userChoices();
 }
 
@@ -75,7 +75,6 @@ inquirer
     // returns promise
     // how the code responds to each possible user input choice
     .then(({ startOptions }) => {
-
         switch(startOptions){
             case "viewAllDepartments":
                 viewAllDepartments();
@@ -107,7 +106,7 @@ inquirer
 // VIEW functions
     // view all departments
     function viewAllDepartments() {
-        console.log("Viewing all Departments");
+        console.log("\n" + "Viewing all Departments");
         db.query("SELECT * FROM departments", function (err, res) {
             if (err) throw err;
             console.table(res);
@@ -117,7 +116,7 @@ inquirer
 
     // view all roles
     function viewAllRoles() {
-        console.log("Viewing all Roles");
+        console.log("\n" + "Viewing all Roles");
         db.query("SELECT * FROM role", function (err, res) {
             if (err) throw err;
             console.table(res);
@@ -127,7 +126,7 @@ inquirer
 
     // view all employees
     function viewAllEmployees() {
-        console.log("Viewing all Employees");
+        console.log("\n" + "Viewing all Employees");
         db.query("SELECT * FROM employee", function (err, res) {
             if (err) throw err;
             console.table(res);
@@ -138,18 +137,22 @@ inquirer
 // ADD functions
     // add department
     function addDepartment() {
-
         inquirer.prompt({
             message: "What is the name of the department you would like to add?",
             name:"department",
             type: "input"
         })
-        
+
         .then(function(response){
             console.log("Adding A Department");
             db.query("INSERT INTO employee_db.departments (name) VALUES (?)", [response.department],function (err, res) {
-                if (err) throw err;
-                viewAllDepartments();
+                if (err) {
+                    throw err;
+                } else {
+                    console.log("\n" + "Sucessfully added new department!");
+                    viewAllDepartments();
+                    nowDone();
+                }
             })
         })
         
@@ -187,7 +190,7 @@ inquirer
 
 // EXIT code
 function nowExit() {
-    console.log("Goodbye.");
+    console.log("\n" + "Goodbye.");
     db.end();
     return
 }
@@ -216,7 +219,6 @@ function nowDone() {
 
     // returns promise for user input
     .then(({ done }) => {
-        
         switch(done){
             case true:
                 // go back to initial inquirer prompt with start questions
@@ -225,6 +227,6 @@ function nowDone() {
             case false:
                 nowExit();
             break;
-        }
+        };
     });
 }
