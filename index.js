@@ -75,6 +75,15 @@ inquirer
     // returns promise
     // how the code responds to each possible user input choice
     .then(({ startOptions }) => {
+
+        // switch(startOptions){
+        //     case "viewAllDepartments":
+        //         viewAllDepartments();
+        //     break;
+        //     case "viewAllRoles":
+        //         viewAllRoles();
+        //     break;
+        // }
         if(startOptions === "viewAllDepartments") {
             viewAllDepartments();
         }
@@ -85,7 +94,7 @@ inquirer
             viewAllEmployees();
         }
         else if(startOptions === "addDepartment") {
-            add.addDepartment();
+            addDepartment();
         }
         else if(startOptions === "addRole") {
             addRole();
@@ -138,11 +147,20 @@ inquirer
 // ADD functions
     // add department
     function addDepartment() {
-        console.log("Add A Department");
-        db.query("INSERT INTO departments SET ?", function (err, res) {
-            if (err) throw err;
-            // need help on this part
+
+        inquirer.prompt({
+            message:'What is the name of the department?',
+            name:"department",
+            type: 'input'
+        }).then(function(response){
+            console.log("Adding A Department");
+            db.query("INSERT INTO employee_db.departments (name) VALUES (?)", [response.department],function (err, res) {
+                if (err) throw err;
+                viewAllDepartments();
+                // need help on this part
+            })
         })
+        
     }
 
     // add role
@@ -164,7 +182,15 @@ inquirer
 // UPDATE functions
     // update role
     function updateRole() {
+        viewAllRoles();
+        inquirer.prompt({
+            message: "Please select the role you would like to update: ",
+            name: "update",
+            type: "input"
+        }).then(function({update}){
+            //db.query
 
+        })
     }
 
 
