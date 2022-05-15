@@ -140,15 +140,20 @@ inquirer
     function addDepartment() {
 
         inquirer.prompt({
-            message:'What is the name of the department?',
+            message: "What is the name of the department you would like to add?",
             name:"department",
-            type: 'input'
-        }).then(function(response){
+            type: "input"
+        })
+        
+        .then(({ department }) => {
             console.log("Adding A Department");
             db.query("INSERT INTO employee_db.departments (name) VALUES (?)", [response.department],function (err, res) {
-                if (err) throw err;
-                viewAllDepartments();
-                // need help on this part
+                if (err) {
+                    throw err;
+                } else {
+                    console.log("Sucessfully added new department!");
+                    viewAllDepartments()
+                }
             })
         })
         
