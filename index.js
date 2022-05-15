@@ -145,15 +145,11 @@ inquirer
             type: "input"
         })
         
-        .then(({ department }) => {
+        .then(function(response){
             console.log("Adding A Department");
             db.query("INSERT INTO employee_db.departments (name) VALUES (?)", [response.department],function (err, res) {
-                if (err) {
-                    throw err;
-                } else {
-                    console.log("Sucessfully added new department!");
-                    viewAllDepartments()
-                }
+                if (err) throw err;
+                viewAllDepartments();
             })
         })
         
