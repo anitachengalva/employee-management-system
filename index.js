@@ -184,6 +184,12 @@ inquirer
         })
     }
 
+// EXIT code
+function nowExit() {
+    console.log("Goodbye.");
+    db.end();
+    return
+}
 
 // function asked at the end of sections
 // allows user to end or keep working
