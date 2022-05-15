@@ -23,7 +23,7 @@ db.connect(function(err) {
 
 // welcome message
 function welcome() {
-    console.log("Welcome to the Employee Database");
+    console.log("Welcome to the Employee Management Database");
     userChoices();
 }
 
@@ -76,39 +76,30 @@ inquirer
     // how the code responds to each possible user input choice
     .then(({ startOptions }) => {
 
-        // switch(startOptions){
-        //     case "viewAllDepartments":
-        //         viewAllDepartments();
-        //     break;
-        //     case "viewAllRoles":
-        //         viewAllRoles();
-        //     break;
-        // }
-        if(startOptions === "viewAllDepartments") {
-            viewAllDepartments();
-        }
-        else if(startOptions === "viewAllRoles") {
-            viewAllRoles();
-        }
-        else if(startOptions === "viewAllEmployees") {
-            viewAllEmployees();
-        }
-        else if(startOptions === "addDepartment") {
-            addDepartment();
-        }
-        else if(startOptions === "addRole") {
-            addRole();
-        }
-        else if(startOptions === "addEmployee") {
-            addEmployee();
-        }
-        else if(startOptions === "updateRole") {
-            updateRole();
-        }
-        else if(startOptions === "EXIT") {
-            console.log("Goodbye");
-            db.end();
-            return
+        switch(startOptions){
+            case "viewAllDepartments":
+                viewAllDepartments();
+            break;
+            case "viewAllRoles":
+                viewAllRoles();
+            break;
+            case "viewAllEmployees":
+                viewAllEmployees();
+            case "addDepartment":
+                addDepartment();
+            break;
+            case "addRole":
+                addRole();
+            break;
+            case "addEmployee":
+                addEmployee();
+            break;
+            case "updateRole":
+                updateRole();
+            break;
+            case "EXIT":
+                nowExit();
+            break;
         }
     });
 }
