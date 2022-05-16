@@ -160,7 +160,42 @@ inquirer
 
     // add role
     function addRole() {
+        inquirer.prompt(
+            {
+                message: "What is the title of the role you would like to add?",
+                name: "role",
+                type: "input"
+            },
+            {
+                message: "What is the salary of this role?",
+                name: "salary",
+                type: "number"
+            },
+            {
+                message: "Please select which department this role belongs in",
+ //             name: "department",
+                type: "list",
+                choices:
+                [
+                    {
+                        // pull options from database of departments
+                    }
+                ]
+            }
+        )
 
+        .then(function(response){
+            console.log("Adding A Role");
+            db.query("INSERT INTO employee_db.role (title) VALUES (?)", [response.role],function (err, res) {
+                if (err) {
+                    throw err;
+                } else {
+                    console.log("\n" + "Sucessfully added new role!");
+                    viewAllRoles();
+                    nowDone();
+                }
+            })
+        })
     }
 
     // add employee
