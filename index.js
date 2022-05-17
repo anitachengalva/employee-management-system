@@ -106,7 +106,7 @@ inquirer
 // VIEW functions
     // view all departments
     function viewAllDepartments() {
-        console.log("\n" + "Viewing all Departments");
+        console.log("\n" + "Viewing All Departments");
         db.query("SELECT * FROM departments", function (err, res) {
             if (err) throw err;
             console.table(res);
@@ -116,7 +116,7 @@ inquirer
 
     // view all roles
     function viewAllRoles() {
-        console.log("\n" + "Viewing all Roles");
+        console.log("\n" + "Viewing All Roles");
         db.query("SELECT * FROM role", function (err, res) {
             if (err) throw err;
             console.table(res);
@@ -126,7 +126,7 @@ inquirer
 
     // view all employees
     function viewAllEmployees() {
-        console.log("\n" + "Viewing all Employees");
+        console.log("\n" + "Viewing All Employees");
         db.query("SELECT * FROM employee", function (err, res) {
             if (err) throw err;
             console.table(res);
@@ -144,7 +144,7 @@ inquirer
         })
 
         .then(function(response){
-            console.log("Adding A Department");
+            console.log("Adding New Department");
             db.query("INSERT INTO employee_db.departments (name) VALUES (?)", [response.department], function (err, res) {
                 if (err) {
                     throw err;
@@ -193,8 +193,8 @@ inquirer
         ])
 
         .then(function(response){
-            console.log("Adding A Role"); // is this syntax correct for multiple inputs?
-            db.query("INSERT INTO employee_db.role (title) VALUES (?)", "INSERT INTO employee_db.role (salary) VALUES (?)", "INSET INTO employee_db.role () VALUES (?)",
+            console.log("Adding New Role"); // is this syntax correct for multiple inputs?
+            db.query("INSERT INTO employee_db.role (title, salary, department_id) VALUES (? == ? == ?)",
             [response.role], function (err, res) {
                 if (err) {
                     throw err;
@@ -236,29 +236,71 @@ inquirer
             {
                 message: "What is the employee's role?",
                 name: "role",
+                type: "list",
                 choices:
                 [
                     {
-                        role //?
+                        role //? same err w/ departments
+                    }
+                ]
+            },
+            {
+                message: "Who is the employee's manager?",
+                name: "manager",
+                type: "list",
+                choices:
+                [
+                    {
+                        employees //? same err as before
                     }
                 ]
             }
         ])
+
+        .then(function(response){
+            console.log("Adding New Employee");
+            // correct syntax for multiple inputs?
+            db.query("INSERT INTO employee_db.employee (first_name, last_name, role_id, manager_id) VALUES (? == ? == ? == ?)", [response.employee], function (err, res) {
+                if (err) {
+                    throw err;
+                } else {
+                    console.log("\n" + "Sucessfully added new employee!");
+                    viewAllEmployees();
+                    nowDone();
+                }
+            })
+        })
     }
 
 // UPDATE functions
     // update role
     function updateRole() {
+        if (err) {
+            throw err,
+            console.log("\n" + "Sorry, that is an invalid role. Please try again")
+        };
+
         viewAllRoles();
         inquirer.prompt({
-            message: "Please select the role you would like to update: ",
+            message: "Please type the role you would like to update: ",
             name: "update",
             type: "input"
         })
+        // title, salary, department
         
-        .then(function({ update }){
-            //db.query
-
+        .then(function({ update }) {
+            console.log("Updating Role");
+            // title, salary, role
+            db.query("INSERT INTO employee_db.role (name) VALUES (?)",
+            [response.department], function (err, res) {
+                if (err) {
+                    throw err;
+                } else {
+                    console.log("\n" + "Sucessfully updated role!");
+                    viewAllRoles();
+                    nowDone();
+                }
+            })
         })
     }
 
