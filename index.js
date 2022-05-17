@@ -171,7 +171,32 @@ function queryAllDepartments() {
     });
 }
 
+function queryAllRoles() {
+    return new Promise(function (resolve, reject) {
+        const sql = `SELECT * FROM role`;
+        db.query(sql, function (err, rows) {
+            if (err) {
+                return reject(err);
+            }
+            resolve(rows);
+        });
+    });
+}
+
+function queryAllEmployees() {
+    return new Promise(function (resolve, reject) {
+        const sql = `SELECT * FROM employee`;
+        db.query(sql, function (err, rows) {
+            if (err) {
+                return reject(err);
+            }
+            resolve(rows);
+        });
+    });
+}
+
 // add role
+// turns database table into a variable that can be passed into Inquire
 async function addRole() {
     const departments = await queryAllDepartments();
     const departmentObjects = departments.map(({ id, name }) => ({
@@ -198,7 +223,7 @@ async function addRole() {
         }
     ])
 
-        .then((response) => {
+        .then(({ response }) => { //do brackets affect the response?
             console.log("Adding New Role", response);
             db.query("INSERT INTO role (title, salary, department_id) values (?,?,?)",
                 [response.title, response.salary, response.departmentID], function (err, res) {
@@ -213,26 +238,19 @@ async function addRole() {
         })
 }
 
-// wrap promise
-function queryAllRoles() {
-    return new Promise(function (resolve, reject) {
-        const sql = `SELECT * FROM role`;
-        db.query(sql, function (err, rows) {
-            if (err) {
-                return reject(err);
-            }
-            resolve(rows);
-        });
-    });
-}
-
 // add employee
+// turns database table into a variable that can be passed into Inquire
 async function addEmployee() {
     const roles = await queryAllRoles();
     const roleObjects = roles.map(({ id, title, salary, department_id }) => ({
         name: title,
         value: id,
         // do I need to add lines for salary and department_id as well?
+    }))
+    const employees = await queryAllEmployees();
+    const employeeObjects = employees.map(({ id, first_name, last_name, role_id, manager_id }) => ({
+        name: first_name, last_name, // is this the correct way to list name?
+        value: id,
     }))
 
     inquirer.prompt([
@@ -260,7 +278,7 @@ async function addEmployee() {
         }
     ])
 
-        .then(({ response }) => { // keep as response? see line 195
+        .then(({ response }) => {
             console.log("Adding New Employee");
             // correct syntax for multiple inputs?
             db.query("INSERT INTO employee_db.employee (first_name, last_name, role_id, manager_id) VALUES (? == ? == ? == ?)", [response.employee], function (err, res) {
@@ -273,19 +291,6 @@ async function addEmployee() {
                 }
             })
         })
-}
-
-// wrap promise
-function queryAllEmployees() {
-    return new Promise(function (resolve, reject) {
-        const sql = `SELECT * FROM employee`;
-        db.query(sql, function (err, rows) {
-            if (err) {
-                return reject(err);
-            }
-            resolve(rows);
-        });
-    });
 }
 
 // UPDATE functions
