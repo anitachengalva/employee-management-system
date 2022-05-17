@@ -214,6 +214,19 @@ async function addRole() {
         })
 }
 
+// wrap promise
+function queryAllRoles() {
+    return new Promise(function (resolve, reject) {
+        const sql = `SELECT * FROM role`;
+        db.query(sql, function (err, rows) {
+            if (err) {
+                return reject(err);
+            }
+            resolve(rows);
+        });
+    });
+}
+
 // add employee
 function addEmployee() {
     db.query("SELECT * FROM role", function (err, res) {
@@ -277,6 +290,19 @@ function addEmployee() {
                 }
             })
         })
+}
+
+// wrap promise
+function queryAllEmployees() {
+    return new Promise(function (resolve, reject) {
+        const sql = `SELECT * FROM employee`;
+        db.query(sql, function (err, rows) {
+            if (err) {
+                return reject(err);
+            }
+            resolve(rows);
+        });
+    });
 }
 
 // UPDATE functions
