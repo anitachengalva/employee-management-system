@@ -145,7 +145,7 @@ inquirer
 
         .then(function(response){
             console.log("Adding A Department");
-            db.query("INSERT INTO employee_db.departments (name) VALUES (?)", [response.department],function (err, res) {
+            db.query("INSERT INTO employee_db.departments (name) VALUES (?)", [response.department], function (err, res) {
                 if (err) {
                     throw err;
                 } else {
@@ -160,10 +160,17 @@ inquirer
 
     // add role
     function addRole() {
+        db.query("SELECT * FROM departments", function (err, res) {
+            if (err) throw err;
+            const departments = res.map(element => {
+                return element.id
+            })
+        })
+
         inquirer.prompt(
             {
                 message: "What is the title of the role you would like to add?",
-                name: "role",
+                name: "title",
                 type: "input"
             },
             {
@@ -173,20 +180,22 @@ inquirer
             },
             {
                 message: "Please select which department this role belongs in",
- //             name: "department",
+                name: "departmentID",
                 type: "list",
                 choices:
                 [
                     {
-                        // pull options from database of departments
+                        // how to integrate departments from db.query above? err msg says "departments not defined", but it is defined line 165
+                        departments
                     }
                 ]
             }
         )
 
         .then(function(response){
-            console.log("Adding A Role");
-            db.query("INSERT INTO employee_db.role (title) VALUES (?)", [response.role],function (err, res) {
+            console.log("Adding A Role"); // is this syntax correct for multiple inputs?
+            db.query("INSERT INTO employee_db.role (title) VALUES (?)", "INSERT INTO employee_db.role (salary) VALUES (?)", "INSET INTO employee_db.role () VALUES (?)",
+            [response.role], function (err, res) {
                 if (err) {
                     throw err;
                 } else {
@@ -217,7 +226,7 @@ inquirer
             message: "Please select the role you would like to update: ",
             name: "update",
             type: "input"
-        }).then(function({update}){
+        }).then(function({ update }){
             //db.query
 
         })
