@@ -271,12 +271,12 @@ async function addEmployee() {
             type: "list",
             choices: roleObjects
         },
-        // {
-        //     message: "Who is the employee's manager?",
-        //     name: "managerID",
-        //     type: "list",
-        //     choices: employeeObjects
-        // }
+        {
+            message: "Who is the employee's manager?",
+            name: "managerID",
+            type: "list",
+            choices: employeeObjects
+        }
     ])
 
         .then(( response ) => {
