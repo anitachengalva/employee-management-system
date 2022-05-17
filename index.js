@@ -178,7 +178,6 @@ async function addRole() {
         name: name,
         value: id,
     }))
-    console.log(departments);
 
     inquirer.prompt([
         {
@@ -228,19 +227,13 @@ function queryAllRoles() {
 }
 
 // add employee
-function addEmployee() {
-    db.query("SELECT * FROM role", function (err, res) {
-        if (err) throw err;
-        const role = res.map(element => {
-            return element.id
-        })
-    })
-    db.query("SELECT * FROM employee", function (err, res) {
-        if (err) throw err;
-        const employees = res.map(element => {
-            return element.id
-        })
-    })
+async function addEmployee() {
+    const roles = await queryAllRoles();
+    const roleObjects = roles.map(({ id, title, salary, department_id }) => ({
+        name: title,
+        value: id,
+        // do I need to add lines for salary and department_id as well?
+    }))
 
     inquirer.prompt([
         {
@@ -257,23 +250,13 @@ function addEmployee() {
             message: "What is the employee's role?",
             name: "role",
             type: "list",
-            choices:
-                [
-                    {
-                        role //? same err w/ departments
-                    }
-                ]
+            choices: roleObjects
         },
         {
             message: "Who is the employee's manager?",
             name: "manager",
             type: "list",
-            choices:
-                [
-                    {
-                        employees //? same err as before
-                    }
-                ]
+            choices: employeeObjects
         }
     ])
 
