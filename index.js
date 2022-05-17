@@ -224,7 +224,7 @@ async function addRole() {
         }
     ])
 
-        .then(({ response }) => { //do brackets affect the response?
+        .then(( response ) => {
             console.log("Adding New Role", response);
             db.query("INSERT INTO role (title, salary, department_id) values (?,?,?)",
                 [response.title, response.salary, response.departmentID], function (err, res) {
@@ -279,7 +279,7 @@ async function addEmployee() {
         // }
     ])
 
-        .then(({ response }) => {
+        .then(( response ) => {
             console.log("Adding New Employee", response);
             db.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) values (?,?,?,?)",
                 [response.firstName, response.lastName, response.roleID, response.managerID], function (err, res) {
