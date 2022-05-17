@@ -209,13 +209,41 @@ inquirer
 
     // add employee
     function addEmployee() {
+        db.query("SELECT * FROM role", function (err, res) {
+            if (err) throw err;
+            const role = res.map(element => {
+                return element.id
+            })
+        })
+        db.query("SELECT * FROM employee", function (err, res) {
+            if (err) throw err;
+            const employees = res.map(element => {
+                return element.id
+            })
+        })
 
-        //get list of roles
-        //get list of employees
-        //inquirer prompt for first name and last name, then pick a role
-        //pick employee from list
-        //pick role from list
-
+        inquirer.prompt([
+            {
+                message: "What is the employee's first name?",
+                name: "firstName",
+                type: "input"
+            },
+            {
+                message: "What is the employee's last name?",
+                name: "lastName",
+                type: "input"
+            },
+            {
+                message: "What is the employee's role?",
+                name: "role",
+                choices:
+                [
+                    {
+                        role //?
+                    }
+                ]
+            }
+        ])
     }
 
 // UPDATE functions
@@ -226,7 +254,9 @@ inquirer
             message: "Please select the role you would like to update: ",
             name: "update",
             type: "input"
-        }).then(function({ update }){
+        })
+        
+        .then(function({ update }){
             //db.query
 
         })
