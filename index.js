@@ -133,6 +133,7 @@ function viewAllEmployees() {
         nowDone();
     })
 }
+// error occuring where when running viewAllEmployees, the prompt for addDepartments appears after employee list ????
 
 // ADD functions
 // add department
@@ -270,12 +271,12 @@ async function addEmployee() {
             type: "list",
             choices: roleObjects
         },
-        {
-            message: "Who is the employee's manager?",
-            name: "managerID",
-            type: "list",
-            choices: employeeObjects
-        }
+        // {
+        //     message: "Who is the employee's manager?",
+        //     name: "managerID",
+        //     type: "list",
+        //     choices: employeeObjects
+        // }
     ])
 
         .then(({ response }) => {
@@ -297,7 +298,7 @@ async function addEmployee() {
 
 // UPDATE functions
 // update role
-// this doesn't work
+// this doesn't work - need to update
 function updateRole() {
     db.query("SELECT * FROM role", function (err, res) {
         if (err) throw err;
@@ -318,23 +319,13 @@ function updateRole() {
             message: "Please select the employee whose role you would like to change: ",
             name: "updateEmployee",
             type: "list",
-            choices:
-                [
-                    {
-                        employees // same problem
-                    },
-                ]
+            choices: employeeObjects
         },
         {
             message: "Which role would you like to change to",
             name: "updateRole",
             type: "list",
-            choices:
-                [
-                    {
-                        role // same problem
-                    }
-                ]
+            choices: roleObjects
         }
     ])
 
