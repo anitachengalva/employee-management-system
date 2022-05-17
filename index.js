@@ -143,9 +143,9 @@ inquirer
             type: "input"
         })
 
-        .then(function(response){
+        .then(({ department }) => {
             console.log("Adding New Department");
-            db.query("INSERT INTO employee_db.departments (name) VALUES (?)", [response.department], function (err, res) {
+            db.query("INSERT INTO employee_db.departments (name) VALUES (?)", [department], function (err, res) {
                 if (err) {
                     throw err;
                 } else {
@@ -192,7 +192,7 @@ inquirer
             }
         ])
 
-        .then(function(response){
+        .then(({ response }) => { // keep as response or make seperate .then functions for title/salary/departmentID ??
             console.log("Adding New Role"); // is this syntax correct for multiple inputs?
             db.query("INSERT INTO employee_db.role (title, salary, department_id) VALUES (? == ? == ?)",
             [response.role], function (err, res) {
@@ -257,7 +257,7 @@ inquirer
             }
         ])
 
-        .then(function(response){
+        .then(({ response }) => { // keep as response? see line 195
             console.log("Adding New Employee");
             // correct syntax for multiple inputs?
             db.query("INSERT INTO employee_db.employee (first_name, last_name, role_id, manager_id) VALUES (? == ? == ? == ?)", [response.employee], function (err, res) {
@@ -275,20 +275,26 @@ inquirer
 // UPDATE functions
     // update role
     function updateRole() {
-        if (err) {
-            throw err,
-            console.log("\n" + "Sorry, that is an invalid role. Please try again")
-        };
-
+        if (err) throw err;
         viewAllRoles();
-        inquirer.prompt({
-            message: "Please type the role you would like to update: ",
+        inquirer.prompt([
+            {
+            message: "Please select the employee whose role you would like to change: ",
             name: "update",
-            type: "input"
-        })
+            type: "list",
+            choices:
+                [
+                    {
+                        employee // same problem
+                    },
+                ]
+
+            },
+            {},
+        ])
         // title, salary, department
         
-        .then(function({ update }) {
+        .then(({ update }) => {
             console.log("Updating Role");
             // title, salary, role
             db.query("INSERT INTO employee_db.role (name) VALUES (?)",
