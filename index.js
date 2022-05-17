@@ -38,35 +38,35 @@ inquirer
             choices:
             [
                 {
-                name: "View All Departments",
-                value: "viewAllDepartments"
+                    name: "View All Departments",
+                    value: "viewAllDepartments"
                 },
                 {
-                name: "View All Roles",
-                value: "viewAllRoles"
+                    name: "View All Roles",
+                    value: "viewAllRoles"
                 },
                 {
-                name: "View All Employees",
-                value: "viewAllEmployees"
+                    name: "View All Employees",
+                    value: "viewAllEmployees"
                 },
                 {
-                name: "Add A Department",
-                value: "addDepartment"
+                    name: "Add A Department",
+                    value: "addDepartment"
                 },
                 {
-                name: "Add A Role",
-                value: "addRole"
+                    name: "Add A Role",
+                    value: "addRole"
                 },
                 {
-                name: "Add An Employee",
-                value: "addEmployee"
+                    name: "Add An Employee",
+                    value: "addEmployee"
                 },
                 {
-                name: "Update An Employee's Role",
-                value: "updateRole"
+                    name: "Update An Employee's Role",
+                    value: "updateRole"
                 },
                 {
-                name: "EXIT",
+                    name: "EXIT",
                 }
             ]
         }
@@ -275,35 +275,55 @@ inquirer
 // UPDATE functions
     // update role
     function updateRole() {
-        if (err) throw err;
+        db.query("SELECT * FROM role", function (err, res) {
+            if (err) throw err;
+            const role = res.map(element => {
+                return element.id
+            })
+        })
+        db.query("SELECT * FROM employee", function (err, res) {
+            if (err) throw err;
+            const employees = res.map(element => {
+                return element.id
+            })
+        })
+
         viewAllRoles();
         inquirer.prompt([
             {
-            message: "Please select the employee whose role you would like to change: ",
-            name: "update",
-            type: "list",
-            choices:
+                message: "Please select the employee whose role you would like to change: ",
+                name: "updateEmployee",
+                type: "list",
+                choices:
                 [
                     {
-                        employee // same problem
+                        employees // same problem
                     },
                 ]
-
             },
-            {},
+            {
+                message: "Which role would you like to change to",
+                name: "updateRole",
+                type: "list",
+                choices:
+                [
+                    {
+                        role // same problem
+                    }
+                ]
+            }
         ])
-        // title, salary, department
         
         .then(({ update }) => {
             console.log("Updating Role");
-            // title, salary, role
-            db.query("INSERT INTO employee_db.role (name) VALUES (?)",
-            [response.department], function (err, res) {
+            // replace prexisting role
+            db.query("INSERT INTO employee_db.employee (role) VALUES (?)",
+            [update.role], function (err, res) {
                 if (err) {
                     throw err;
                 } else {
                     console.log("\n" + "Sucessfully updated role!");
-                    viewAllRoles();
+                    viewAllEmployees();
                     nowDone();
                 }
             })
