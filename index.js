@@ -167,7 +167,7 @@ inquirer
             })
         })
 
-        inquirer.prompt(
+        inquirer.prompt([
             {
                 message: "What is the title of the role you would like to add?",
                 name: "title",
@@ -190,7 +190,7 @@ inquirer
                     }
                 ]
             }
-        )
+        ])
 
         .then(function(response){
             console.log("Adding A Role"); // is this syntax correct for multiple inputs?
