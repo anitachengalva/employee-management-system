@@ -266,35 +266,38 @@ async function addEmployee() {
         },
         {
             message: "What is the employee's role?",
-            name: "role",
+            name: "roleID",
             type: "list",
             choices: roleObjects
         },
         {
             message: "Who is the employee's manager?",
-            name: "manager",
+            name: "managerID",
             type: "list",
             choices: employeeObjects
         }
     ])
 
         .then(({ response }) => {
-            console.log("Adding New Employee");
-            // correct syntax for multiple inputs?
-            db.query("INSERT INTO employee_db.employee (first_name, last_name, role_id, manager_id) VALUES (? == ? == ? == ?)", [response.employee], function (err, res) {
-                if (err) {
-                    throw err;
-                } else {
-                    console.log("\n" + "Sucessfully added new employee!");
-                    viewAllEmployees();
-                    nowDone();
+            console.log("Adding New Employee", response);
+            db.query("INSERT INTO employee (first_name, last_name, role_id, manager_id) values (?,?,?,?)",
+                [response.firstName, response.lastName, response.roleID, response.managerID], function (err, res) {
+                    if (err) {
+                        throw err;
+                    } else {
+                        console.log("\n" + "Sucessfully added new employee!");
+                        viewAllEmployees();
+                        nowDone();
+                    }
                 }
-            })
+            )
+
         })
 }
 
 // UPDATE functions
 // update role
+// this doesn't work
 function updateRole() {
     db.query("SELECT * FROM role", function (err, res) {
         if (err) throw err;
