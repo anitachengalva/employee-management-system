@@ -214,7 +214,13 @@ async function addRole() {
         {
             message: "What is the salary of this role?",
             name: "salary",
-            type: "number"
+            type: "number",
+            validate:function(input){
+                if (input !=NaN){
+                    return true;
+                }
+                return false;
+            }
         },
         {
             message: "Please select which department this role belongs in",
@@ -233,7 +239,6 @@ async function addRole() {
                     } else {
                         console.log("\n" + "Sucessfully added new role!");
                         viewAllRoles();
-                        nowDone();
                     }
                 })
         })
@@ -299,7 +304,21 @@ async function addEmployee() {
 // UPDATE functions
 // update role
 // this doesn't work - need to update
-function updateRole() {
+async function updateRole() {
+
+    const roles = await queryAllRoles();
+    const roleObjects = roles.map(({ id, title, salary, department_id }) => ({
+        name: title,
+        value: id,
+        // do I need to add lines for salary and department_id as well?
+    }))
+    const employees = await queryAllEmployees();
+    const employeeObjects = await employees.map(({ id, first_name, last_name, role_id, manager_id }) => ({
+        name: first_name, last_name, // is this the correct way to list name?
+        value: id,
+    }))
+
+    console.log(await employeeObjects)
     db.query("SELECT * FROM role", function (err, res) {
         if (err) throw err;
         const role = res.map(element => {
